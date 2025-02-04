@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane style="-fx-background-color: #F0F4F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.project.parkinglot.Controller.TicketController">
+    <children>
+        <VBox AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-border-color: #CCCCCC; -fx-border-radius: 8;" VBox.vgrow="ALWAYS">
+                <children>
+                    <!-- Ticket Management Header -->
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2E4053; -fx-padding: 5;" text="Ticket Management" />
+
+                    <!-- Input Fields for Ticket Details -->
+                    <VBox spacing="10.0">
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <TextField fx:id="txtTicketId" promptText="Ticket ID" style="-fx-background-color: #EAF2F8; -fx-border-color: #A9CCE3; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 5;" HBox.hgrow="ALWAYS" />
+                            <DatePicker fx:id="datePickerIssueDate" maxWidth="Infinity" promptText="Issue Date" style="-fx-background-color: #EAF2F8; -fx-border-color: #A9CCE3; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 5;" HBox.hgrow="ALWAYS" />
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <ComboBox fx:id="comboReservationId" maxWidth="Infinity" promptText="Reservation ID" style="-fx-background-color: #EAF2F8; -fx-border-color: #A9CCE3; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 5;" HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="txtVehicleId" promptText="Vehicle ID" style="-fx-background-color: #EAF2F8; -fx-border-color: #A9CCE3; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 5;" HBox.hgrow="ALWAYS" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Buttons for Managing Tickets -->
+                </children>
+            </VBox>
+        </VBox>
+    </children>
+</AnchorPane>

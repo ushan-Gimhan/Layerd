@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #F4F4F4;" stylesheets="@../css/test.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.project.parkinglot.Controller.TestController">
+
+    <!-- Header -->
+    <HBox prefHeight="80" styleClass="header" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="80.0" prefWidth="504.0" HBox.hgrow="ALWAYS" />
+        <Label styleClass="header-title" text="Dashboard">
+         <font>
+            <Font size="16.0" />
+         </font></Label>
+      <VBox prefHeight="80.0" prefWidth="504.0" HBox.hgrow="ALWAYS" />
+    </HBox>
+
+    <!-- Main Content -->
+    <VBox spacing="20" styleClass="main-content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+        <!-- Stats Cards -->
+        <HBox alignment="CENTER" spacing="20" styleClass="stats-row">
+            <VBox prefHeight="150" prefWidth="300" styleClass="stats-card">
+                <Label styleClass="stats-title" text="Total Users" />
+                <Label styleClass="stats-value" text="1500" />
+            </VBox>
+            <VBox prefHeight="150" prefWidth="300" styleClass="stats-card">
+                <Label styleClass="stats-title" text="Active Sessions" />
+                <Label styleClass="stats-value" text="350" />
+            </VBox>
+            <VBox prefHeight="150" prefWidth="300" styleClass="stats-card">
+                <Label styleClass="stats-title" text="Reports Generated" />
+                <Label styleClass="stats-value" text="75" />
+            </VBox>
+        </HBox>
+
+        <!-- Chart Section -->
+        <HBox alignment="CENTER" spacing="20" styleClass="chart-section">
+            <LineChart fx:id="lineChart" title="Analytics Overview">
+                <xAxis>
+                    <CategoryAxis label="Time" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Users" />
+                </yAxis>
+            </LineChart>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="catagorypane" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #F0F4F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.project.parkinglot.Controller.CatagoryController">
+
+    <!-- GridPane to organize the form inputs and labels -->
+    <children>
+        <GridPane hgap="10" layoutX="50" layoutY="50" style="-fx-padding: 20;" vgap="15">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="120" />
+                <ColumnConstraints halignment="LEFT" minWidth="200" />
+            </columnConstraints>
+
+            <!-- Category ID Row -->
+            <Label style="-fx-font-size: 14px; -fx-text-fill: #333;" text="Category ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+            <!-- Category Name Row -->
+            <Label style="-fx-font-size: 14px; -fx-text-fill: #333;" text="Category Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="categoryNameField" promptText="Enter Name" style="-fx-background-color: #FFFFFF; -fx-border-color: #A0A0A0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+            <!-- Price Per Hour Row -->
+            <Label style="-fx-font-size: 14px; -fx-text-fill: #333;" text="Price per Hour:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="pricePerHourField" promptText="Enter Price" style="-fx-background-color: #FFFFFF; -fx-border-color: #A0A0A0;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <!-- Buttons Row -->
+            <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <Button fx:id="addButton" onAction="#handleAddCategory" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="Add" />
+                <Button fx:id="updateButton" onAction="#handleUpdateCategory" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold;" text="Update" />
+                <Button fx:id="deleteButton" onAction="#handleDeleteCategory" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete" />
+                <Button fx:id="clearButton" onAction="#handleClearFields" style="-fx-background-color: #607D8B; -fx-text-fill: white; -fx-font-weight: bold;" text="Clear" />
+            </HBox>
+         <Label fx:id="catagoryID" prefHeight="18.0" prefWidth="177.0" GridPane.columnIndex="1" />
+         <Label fx:id="catagoryId" prefHeight="18.0" prefWidth="121.0" GridPane.columnIndex="1" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+
+        <!-- TableView for displaying categories -->
+        <TableView fx:id="categoryTable" layoutX="50" layoutY="250" onMouseClicked="#Onclicked" prefHeight="300" prefWidth="500">
+            <columns>
+                <TableColumn fx:id="categoryIdColumn" prefWidth="150" text="Category ID" />
+                <TableColumn fx:id="categoryNameColumn" prefWidth="200" text="Category Name" />
+                <TableColumn fx:id="pricePerHourColumn" prefWidth="150" text="Price per Hour" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

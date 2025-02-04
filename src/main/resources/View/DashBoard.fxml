@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="loginphane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/DashBord.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.Controller.DashBoardController">
+    <children>
+        <HBox spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <!-- Left Navigation Panel -->
+            <VBox prefWidth="220" spacing="10" style="-fx-background-color: #2d3436; -fx-padding: 20;">
+                <Label styleClass="dashboard-title" text="Parking System" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="30.0" />
+                    </VBox.margin>
+                </Label>
+
+                <VBox spacing="8">
+                    <!-- Dashboard Button -->
+                    <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#clickedDashboard" styleClass="nav-button" text="Dashboard">
+                        <graphic>
+                            <Label style="-fx-text-fill: white;" text="🏠" />
+                        </graphic>
+                    </Button>
+
+                    <Button fx:id="btncustomer" mnemonicParsing="false" onAction="#clickedcustomer" styleClass="nav-button" text="Customer">
+                        <graphic>
+                            <Label style="-fx-text-fill: white;" text="👥" />
+                        </graphic>
+                    </Button>
+
+                    <Button fx:id="btnemployee" mnemonicParsing="false" onAction="#clikcedEmployee" styleClass="nav-button" text="Employee">
+                        <graphic>
+                            <Label style="-fx-text-fill: white;" text="👤" />
+                        </graphic>
+                    </Button>
+
+                    <Button fx:id="btnparking" mnemonicParsing="false" onAction="#clickedParking" styleClass="nav-button" text="Parking Spaces">
+                        <graphic>
+                            <Label style="-fx-text-fill: white;" text="🅿️" />
+                        </graphic>
+                    </Button>
+
+                    <Button fx:id="btnreservation" mnemonicParsing="false" onAction="#clickedReservation" styleClass="nav-button" text="Reservations">
+                        <graphic>
+                            <Label style="-fx-text-fill: white;" text="📅" />
+                        </graphic>
+                    </Button>
+
+                    <Button fx:id="btnpayments" mnemonicParsing="false" onAction="#clickedPayments" styleClass="nav-button" text="Payments">
+                        <graphic>
+                            <Label style="-fx-text-fill: white;" text="💳" />
+                        </graphic>
+                    </Button>
+                </VBox>
+
+                <VBox VBox.vgrow="ALWAYS" />
+
+                <Button fx:id="btblogout" mnemonicParsing="false" onAction="#clickedLogOut" styleClass="logout-button" text="Log Out">
+                    <graphic>
+                        <Label style="-fx-text-fill: white;" text="🚪" />
+                    </graphic>
+                </Button>
+            </VBox>
+
+            <!-- Main Content Area -->
+            <AnchorPane fx:id="secondpane" style="-fx-background-color: #f5f6fa;" HBox.hgrow="ALWAYS">
+                <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                    </padding>
+                    <Label styleClass="welcome-text" text="Welcome to Parking Management System">
+                        <font>
+                            <Font name="System Bold" size="24.0" />
+                        </font>
+                    </Label>
+                </VBox>
+            </AnchorPane>
+        </HBox>
+    </children>
+</AnchorPane>

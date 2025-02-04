@@ -1,0 +1,105 @@
+
+.card-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.2, 0, 4);
+    -fx-padding: 20px;
+}
+.card-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center;
+}
+
+.text-field {
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 5px;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 8px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db;
+}
+
+.btn-add {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+}
+
+.btn-update {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+}
+
+.btn-delete {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+}
+
+.btn-reset {
+    -fx-background-color: #e67e22;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.card-3d {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f0f0f0);
+    -fx-background-radius: 15px;
+    -fx-effect:
+            dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 10),
+            innershadow(three-pass-box, rgba(255,255,255,0.5), 15, 0, 0, 15);
+    -fx-padding: 20px;
+    -fx-background-insets: 10;
+    -fx-perspective-transform: rotateX(5deg) rotateY(-5deg);
+    -fx-transition: transform 0.3s;
+}
+
+.card-3d:hover {
+    -fx-effect:
+            dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 15),
+            innershadow(three-pass-box, rgba(255,255,255,0.7), 20, 0, 0, 20);
+    -fx-transform: scale(1.02) rotateX(3deg) rotateY(-3deg);
+}
+
+.card-3d-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 1, 1);
+}
+
+.card-3d-input {
+    -fx-background-color: linear-gradient(to right, #f6f8f9, #e5ebee);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 6);
+    -fx-padding: 10px;
+}
+
+.card-3d-button {
+    -fx-background-color: linear-gradient(to bottom, #3498db, #2980b9);
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-text-fill: white;
+}
+
+.card-3d-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #2980b9, #3498db);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 3);
+}

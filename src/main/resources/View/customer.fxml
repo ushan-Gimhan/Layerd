@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/customer.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.Controller.CustomerController">
+   <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <!-- Background Pattern -->
+      <Rectangle styleClass="background-pattern" StackPane.alignment="TOP_RIGHT" />
+
+      <!-- Main Content -->
+      <VBox spacing="20" styleClass="main-container">
+         <padding>
+            <Insets bottom="20" left="30" right="30" top="20" />
+         </padding>
+
+         <!-- Header Section - Minimized padding, maximized clarity -->
+         <HBox alignment="CENTER_LEFT" styleClass="header-section">
+            <Label styleClass="header-label" text="Customer and Vehicle Form">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+         </HBox>
+
+         <!-- Content Cards Container - Using GridPane for better responsiveness -->
+         <GridPane hgap="20" vgap="20">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="300" prefWidth="400" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="300" prefWidth="400" />
+            </columnConstraints>
+
+            <!-- Customer Details Card -->
+            <VBox styleClass="content-card" GridPane.columnIndex="0">
+               <Label styleClass="card-header" text="Customer Information" />
+               <VBox spacing="10" styleClass="form-section">
+                  <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="303.0" styleClass="field-group">
+                     <Label minWidth="100" styleClass="field-label" text="Customer ID" />
+                     <Label fx:id="custid" styleClass="info-value" HBox.hgrow="ALWAYS" />
+                  </HBox>
+
+                  <VBox styleClass="field-group">
+                     <Label styleClass="field-label" text="Name" />
+                     <TextField fx:id="txtName" maxWidth="Infinity" promptText="Enter customer name" styleClass="premium-field" />
+                  </VBox>
+
+                  <VBox styleClass="field-group">
+                     <Label styleClass="field-label" text="NIC" />
+                     <TextField fx:id="txtNic" maxWidth="Infinity" promptText="Enter NIC number" styleClass="premium-field" />
+                  </VBox>
+
+                  <VBox styleClass="field-group">
+                     <Label styleClass="field-label" text="Email" />
+                     <TextField fx:id="txtEmail" maxWidth="Infinity" promptText="Enter email address" styleClass="premium-field" />
+                  </VBox>
+
+                  <VBox styleClass="field-group">
+                     <Label styleClass="field-label" text="Mobile Number" />
+                     <TextField fx:id="txtNumber" maxWidth="Infinity" promptText="Enter mobile number" styleClass="premium-field" />
+                  </VBox>
+               </VBox>
+            </VBox>
+
+            <!-- Vehicle Details Card -->
+            <VBox styleClass="content-card" GridPane.columnIndex="1">
+               <Label styleClass="card-header" text="Vehicle Information" />
+               <VBox spacing="10" styleClass="form-section">
+                  <VBox styleClass="field-group">
+                     <Label styleClass="field-label" text="Vehicle Number" />
+                     <TextField fx:id="txtvNumber" maxWidth="Infinity" promptText="Enter vehicle number" styleClass="premium-field" />
+                  </VBox>
+
+                  <HBox fx:id="vId" alignment="CENTER_LEFT" styleClass="field-group">
+                     <Label minWidth="100" styleClass="field-label" text="Vehicle ID" />
+                     <Label fx:id="vehicleID" styleClass="info-value" HBox.hgrow="ALWAYS" />
+                  </HBox>
+
+                  <VBox styleClass="field-group">
+                     <Label styleClass="field-label" text="Vehicle Category" />
+                     <HBox spacing="10">
+                        <ComboBox fx:id="comboVehicleCategory" maxWidth="Infinity" onAction="#cmbCat" styleClass="premium-combo" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btbadd" onAction="#clickedToadd" styleClass="button-add" text="Add" />
+                     </HBox>
+                  </VBox>
+
+                  <HBox fx:id="name" alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="354.0" styleClass="field-group">
+                     <Label minWidth="100" styleClass="field-label" text="Category Name" />
+                     <Label fx:id="catagoryName" styleClass="info-value" HBox.hgrow="ALWAYS" />
+                  </HBox>
+
+                  <HBox fx:id="price" alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="350.0" styleClass="field-group">
+                     <Label minWidth="100" styleClass="field-label" text="Price per Hour" />
+                     <Label fx:id="priceLable" styleClass="info-value" HBox.hgrow="ALWAYS" />
+                  </HBox>
+               </VBox>
+            </VBox>
+            <rowConstraints>
+               <RowConstraints />
+            </rowConstraints>
+         </GridPane>
+
+         <!-- Action Buttons - Optimized spacing and alignment -->
+         <HBox spacing="10" styleClass="action-buttons">
+            <Button fx:id="btnSave" onAction="#saveClicked" styleClass="premium-button, button-save" text="Save" />
+            <Button fx:id="btnUpdate" onAction="#updateClicked" styleClass="premium-button, button-update" text="Update" />
+            <Button fx:id="btnDelete" onAction="#deleteClicked" styleClass="premium-button, button-delete" text="Delete" />
+            <Button fx:id="btnReset" onAction="#resetClicked" styleClass="premium-button, button-reset" text="Reset" />
+            <Button fx:id="AddAccesCard" mnemonicParsing="false" onAction="#ClickedAccesCard" text="Apply AccesCard">
+               <styleClass>
+                  <String fx:value="premium-button" />
+                  <String fx:value="button-reset" />
+               </styleClass>
+            </Button>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="txtreport" onAction="#genarateReport" styleClass="premium-button, button-report" text="Generate Report" />
+            <Button fx:id="openMailSend" onAction="#sendMail" styleClass="premium-button, button-mail" text="Open Mail Send" />
+         </HBox>
+
+         <!-- Table Section - Maximized viewing area -->
+         <TableView fx:id="customerTable" onMouseClicked="#clikedTable" styleClass="premium-table" VBox.vgrow="ALWAYS">
+            <columns>
+               <TableColumn fx:id="custId" prefWidth="100" text="Customer ID" />
+               <TableColumn fx:id="custName" prefWidth="120" text="Name" />
+               <TableColumn fx:id="custNic" prefWidth="100" text="NIC" />
+               <TableColumn fx:id="custEmail" prefWidth="150" text="Email" />
+               <TableColumn fx:id="custNumber" prefWidth="120" text="Mobile Number" />
+               <TableColumn fx:id="vehicleNum" prefWidth="120" text="Vehicle Number" />
+               <TableColumn fx:id="vehiclecata" prefWidth="200" text="Vehicle Category" />
+               <TableColumn fx:id="pricePerH" prefWidth="120" text="Price per Hour" />
+            </columns>
+            <placeholder>
+               <Label styleClass="table-placeholder" text="No content in table" />
+            </placeholder>
+         </TableView>
+      </VBox>
+   </StackPane>
+</AnchorPane>
