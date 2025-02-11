@@ -1,6 +1,5 @@
 package com.service.Project.dao.custom.impl;
 
-import com.service.Project.Model.EmployeeDto;
 import com.service.Project.dao.CrudUtil;
 import com.service.Project.dao.custom.EmployeeDAO;
 import com.service.Project.entity.Employee;

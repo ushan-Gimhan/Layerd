@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="catagorypane" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #F0F4F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.project.parkinglot.Controller.CatagoryController">
+<AnchorPane fx:id="catagorypane" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #F0F4F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.Controller.CatagoryController">
 
     <!-- GridPane to organize the form inputs and labels -->
     <children>

@@ -1,6 +1,8 @@
 package com.service.Project.Controller;
 
+import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.CvFormDto;
+import com.service.Project.Model.VechicleDto;
 import com.service.Project.View.Tm.CvFromTm;
 import com.service.Project.bo.custom.CVFormBO;
 import com.service.Project.bo.custom.Impl.CVFormBOImpl;
@@ -8,12 +10,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -120,8 +127,14 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void clickedToadd(ActionEvent event) {
+    void clickedToadd(ActionEvent event) throws IOException {
 
+        Parent load= FXMLLoader.load(getClass().getResource("/View/VechicleCatagory.fxml"));
+
+        Scene scene = new Scene(load);
+        Stage stage= new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -151,7 +164,68 @@ public class CustomerController implements Initializable {
 
     @FXML
     void saveClicked(ActionEvent event) {
+        String id = custid.getText();
+        String name = txtName.getText();
+        String nic = txtNic.getText();
+        String email = txtEmail.getText();
+        String phone = txtNumber.getText();
+        String vNmber = txtvNumber.getText();
 
+        String vechicleId = vehicleID.getText();
+//        String selectedcatId = comboVehicleCategory.getValue();
+        String selectCatName = catagoryName.getText();
+//        Double pricePerHourse = Double.parseDouble(pricePerH.getText());
+
+//        if (selectedcatId == null) {
+//            new Alert(Alert.AlertType.ERROR, "Please select Vehicle Catagory..!").show();
+//            return false;
+//        }
+
+        txtName.setStyle(txtName.getStyle() + "-fx-text-fill: blue;");
+        txtNic.setStyle(txtNic.getStyle() + "-fx-text-fill: blue;");
+        txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: blue;");
+        txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: blue;");
+        txtvNumber.setStyle(txtvNumber.getStyle() + "-fx-text-fill: blue;");
+
+        String namePattern = "^[A-Za-z ]+$";
+        String nicPattern = "^[0-9]{9}[vVxX]||[0-9]{12}$";
+        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+        String vechicleNum ="^((?!0000)([a-zA-Z]{1,3}|([0-9]{1,3}))-[0-9])|(([a-zA-Z]{1,3}|([0-9]{1,3}))-[0-9])(?!000)";
+
+        boolean isValidName = name.matches(namePattern);
+        boolean isValidNic = nic.matches(nicPattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValidPhone = phone.matches(phonePattern);
+        boolean isVechiclenum = vechicleNum.matches(vechicleNum);
+
+        if (!isValidName) {
+            txtName.setStyle(txtName.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidNic) {
+            txtNic.setStyle(txtNic.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidEmail) {
+            txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidPhone) {
+            txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: red;");
+        }
+//        if(!isVechiclenum){
+//            txtvNumber.setStyle(txtvNumber.getStyle() + "-fx-text-fill: red;");
+//        }
+
+
+//        if (isValidName && isValidNic && isValidEmail && isValidPhone) {
+//            CustomerDto customerDto = new CustomerDto(id, name, nic, email, phone);
+//            VechicleDto vechicleDto = new VechicleDto(vechicleId,vNmber,id,selectedcatId);
+//
+////            boolean isSaved = customerModel.saveCustomer(customerDto);
+////            boolean isvSaved =vechicleModel.saveVehicle(vechicleDto);
+//            refreshPage();
+//
+//        }
+//        return isValidName;
     }
 
     @FXML

@@ -27,7 +27,7 @@ public class EmployeeController  implements Initializable {
     private TableColumn<EmployeeTm,String> addminId;
 
     @FXML
-    private ComboBox<?> adminIDCombo;
+    private ComboBox<String> adminIDCombo;
 
     @FXML
     private Button btnAdd;
@@ -89,8 +89,7 @@ public class EmployeeController  implements Initializable {
         String empId = txtempid.getText();
         String mobileNumber = txtMobileNumber.getText();
         String name = txtName.getText();
-//        String adminID = adminIDCombo.getValue();
-        String adminID ="A001";
+        String adminID = adminIDCombo.getValue();
 
         String namePattern = "^[A-Za-z ]+$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -140,7 +139,7 @@ public class EmployeeController  implements Initializable {
             txtDesignation.setText(employeeTm.getDesignation());
             txtEmail.setText(employeeTm.getEmail());
             txtMobileNumber.setText(employeeTm.getPhoneNumber());
-//            adminIDCombo.setValue(employeeTm.getAdminId());
+            adminIDCombo.setValue(employeeTm.getAdminId());
 
             btnAdd.setDisable(true);
             btnDelete.setDisable(false);
