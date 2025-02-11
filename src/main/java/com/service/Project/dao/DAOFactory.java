@@ -12,7 +12,7 @@ public class DAOFactory {
         return daoFactory;
     }
     public enum DAOType{
-        customer,employee,payment,vehiclec,vehicle,admin;
+        customer,employee,payment,vehiclec,vehicle,admin,parkinglot,floor,space;
     }
     public SuperDAO getDao(DAOType type){
         switch (type){
@@ -22,14 +22,20 @@ public class DAOFactory {
                 return new EmployeeDAOImpl();
             case payment:
                 return new PaymentDAOImpl();
-                case vehiclec:
-                    return new VehicleCatgoryImpl();
+            case vehiclec:
+                return new VehicleCatgoryImpl();
             case vehicle:
-                    return new VehicleDAOImpl();
+                return new VehicleDAOImpl();
             case admin:
                 return new AdminDAOImpl();
-                default:
-                    return null;
+            case parkinglot:
+                return new ParkingLotDAOImpl();
+            case floor:
+                return new FloorDAOImpl();
+            case space:
+                return new ParkingLotSpaceDAOImpl();
+            default:
+                return null;
         }
     }
 }
