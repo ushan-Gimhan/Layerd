@@ -18,11 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -119,48 +115,143 @@ public class SpaceController implements Initializable {
     private TextField txtSpaceId;
 
     @FXML
-    void AddSpace(ActionEvent event) {
+    void AddSpace(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String spaceId = txtSpaceId.getText();
+        String spaceStatus = comboSpaceStatus.getValue();
+        String floorId = txtFloorId.getText();
 
+        ParkingSpaceDto parkingSpaceDto = new ParkingSpaceDto(spaceId,floorId,spaceStatus);
+
+        boolean isSvaed =parkingSpaceBO.save(parkingSpaceDto);
+
+        if (isSvaed) {
+//            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Space Added Successfully...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fail to Add Space...!").show();
+        }
     }
 
     @FXML
-    void Addfloor(ActionEvent event) {
+    void Addfloor(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String floorId = txtFloorId.getText();
+        String lotid = txtLotId.getText();
+        String status = comboFloorStatus.getValue();
 
+        FloorDto floorDto = new FloorDto(floorId, lotid, status);
+
+        boolean isSvaed = floorBO.save(floorDto);
+
+        if (isSvaed) {
+//            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Space Added Successfully...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fail to Add Space...!").show();
+        }
     }
 
     @FXML
     void ClickedLotTable(MouseEvent event) {
+        FloorTm floorTm = floorTable.getSelectionModel().getSelectedItem();
 
+        if(floorTm != null) {
+            txtFloorId.setText(floorTm.getFloorId());
+            txtLotIdFloor.setText(floorTm.getLotId());
+            comboFloorStatus.setValue(floorTm.getStatus());
+        }
     }
 
     @FXML
-    void UpdateLot(ActionEvent event) {
+    void UpdateLot(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String LotId = txtLotId.getText();
+        String lotStatus = comboLotStatus.getValue();
+        String location = txtLocation.getText();
 
+        ParkingLotDto parkingLotDto = new ParkingLotDto(LotId,location,lotStatus);
+
+        boolean isSvaed = parkingLotBO.update(parkingLotDto);
+
+        if (isSvaed) {
+//            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Parking Lot Update Successfully...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fail to Update...!").show();
+        }
     }
 
     @FXML
-    void UpdateSpace(ActionEvent event) {
+    void UpdateSpace(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String spaceId = txtSpaceId.getText();
+        String spaceStatus = comboSpaceStatus.getValue();
+        String floorId = txtFloorId.getText();
 
+        ParkingSpaceDto parkingSpaceDto = new ParkingSpaceDto(spaceId,floorId,spaceStatus);
+
+        boolean isSvaed =parkingSpaceBO.update(parkingSpaceDto);
+
+        if (isSvaed) {
+//            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Space Added Successfully...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fail to Add Space...!").show();
+        }
     }
 
     @FXML
-    void addLot(ActionEvent event) {
+    void addLot(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String LotId = txtLotId.getText();
+        String lotStatus = comboLotStatus.getValue();
+        String location = txtLocation.getText();
 
+        ParkingLotDto parkingLotDto = new ParkingLotDto(LotId,location,lotStatus);
+
+        boolean isSvaed = parkingLotBO.save(parkingLotDto);
+
+        if (isSvaed) {
+//            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Parking Lot Added Successfully...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fail to Add Lot...!").show();
+        }
     }
 
     @FXML
     void clickedLotTable(MouseEvent event) {
+        ParkingLotTm lotTm =  parkingLotTable.getSelectionModel().getSelectedItem();
 
+        if(lotTm != null){
+            txtLotId.setText(lotTm.getLotId());
+            txtLocation.setText(lotTm.getLocation());
+            comboLotStatus.setValue(lotTm.getStatus());
+        }
     }
 
     @FXML
     void spaceTable(MouseEvent event) {
-
+        ParkingSpaceTm spaceTm =  parkingSpaceTable.getSelectionModel().getSelectedItem();
+        if(spaceTm != null){
+            txtSpaceId.setText(spaceTm.getSpaceId());
+            txtFloorIdSpace.setText(spaceTm.getFloorId());
+            comboSpaceStatus.setValue(spaceTm.getStatus());
+        }
     }
 
     @FXML
-    void updateFloor(ActionEvent event) {
+    void updateFloor(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String floorId = txtFloorId.getText();
+        String lotid = txtLotId.getText();
+        String status = comboFloorStatus.getValue();
 
+        FloorDto floorDto = new FloorDto(floorId, lotid, status);
+
+        boolean isSvaed = floorBO.update(floorDto);
+
+        if (isSvaed) {
+//            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Space Added Successfully...!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fail to Add Space...!").show();
+        }
     }
 
     @Override
@@ -179,9 +270,9 @@ public class SpaceController implements Initializable {
 //            nextFloorId();
             txtFloorId.setText(floorBO.generateID());
 //            nextLotId();
-            parkingLotBO.generateID();
+            txtLotId.setText(parkingLotBO.generateID());
 //            nextSpaceId();
-            parkingSpaceBO.generateID();
+            txtSpaceId.setText(parkingSpaceBO.generateID());
             loadTableData();
         } catch (SQLException e) {
             throw new RuntimeException(e);
