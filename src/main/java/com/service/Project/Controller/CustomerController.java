@@ -1,13 +1,16 @@
 package com.service.Project.Controller;
 
+import com.service.Project.DBConnection.DbConnection;
 import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.CvFormDto;
 import com.service.Project.Model.VechicleDto;
 import com.service.Project.View.Tm.CvFromTm;
 import com.service.Project.bo.custom.CVFormBO;
+import com.service.Project.bo.custom.CustomerBO;
 import com.service.Project.bo.custom.Impl.CVFormBOImpl;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.service.Project.bo.custom.Impl.CustomerBOImpl;
+import com.service.Project.bo.custom.Impl.VehicleBOImpl;
+import com.service.Project.bo.custom.VehicleBO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -29,6 +33,8 @@ import java.util.ResourceBundle;
 public class CustomerController implements Initializable {
 
     CVFormBO cvFormBO = new CVFormBOImpl();
+    CustomerBO customerBO = new CustomerBOImpl();
+    VehicleBO vehicleBO = new VehicleBOImpl();
 
     @FXML
 
@@ -52,8 +58,8 @@ public class CustomerController implements Initializable {
     @FXML
     private Label catagoryName;
 
-//    @FXML
-//    private ComboBox<?> comboVehicleCategory;
+    @FXML
+    private ComboBox<String> comboVehicleCategory;
 
     @FXML
     private TableColumn<CvFromTm, String> custEmail;
@@ -163,7 +169,7 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void saveClicked(ActionEvent event) {
+    void saveClicked(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = custid.getText();
         String name = txtName.getText();
         String nic = txtNic.getText();
@@ -172,7 +178,7 @@ public class CustomerController implements Initializable {
         String vNmber = txtvNumber.getText();
 
         String vechicleId = vehicleID.getText();
-//        String selectedcatId = comboVehicleCategory.getValue();
+        String selectedcatId = comboVehicleCategory.getValue();
         String selectCatName = catagoryName.getText();
 //        Double pricePerHourse = Double.parseDouble(pricePerH.getText());
 
@@ -211,21 +217,51 @@ public class CustomerController implements Initializable {
         if (!isValidPhone) {
             txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: red;");
         }
-//        if(!isVechiclenum){
-//            txtvNumber.setStyle(txtvNumber.getStyle() + "-fx-text-fill: red;");
-//        }
 
 
-//        if (isValidName && isValidNic && isValidEmail && isValidPhone) {
-//            CustomerDto customerDto = new CustomerDto(id, name, nic, email, phone);
-//            VechicleDto vechicleDto = new VechicleDto(vechicleId,vNmber,id,selectedcatId);
-//
-////            boolean isSaved = customerModel.saveCustomer(customerDto);
-////            boolean isvSaved =vechicleModel.saveVehicle(vechicleDto);
-//            refreshPage();
-//
-//        }
-//        return isValidName;
+        if (isValidName && isValidNic && isValidEmail && isValidPhone) {
+            CustomerDto customerDto = new CustomerDto(id, name, nic, email, phone);
+            VechicleDto vechicleDto = new VechicleDto(vechicleId,vNmber,id,selectedcatId);
+
+            try {
+                Connection connection = DbConnection.getInstance().getConnection();
+                connection.setAutoCommit(false);
+
+                boolean isSaved = customerBO.save(customerDto);
+                if (isSaved) {
+                    boolean isvSaved = vehicleBO.save(vechicleDto);
+                    if (isvSaved) {
+                        connection.commit();
+                        new Alert(Alert.AlertType.INFORMATION, "Customer and Vehicle Added Successfully!").show();
+                        refreshPage();
+                    } else {
+                        connection.rollback();
+                        new Alert(Alert.AlertType.ERROR, "Failed to Add Vehicle. Transaction Rolled Back!").show();
+                    }
+                } else {
+                    connection.rollback();
+                    new Alert(Alert.AlertType.ERROR, "Failed to Add Customer. Transaction Rolled Back!").show();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
+                try {
+                    DbConnection.getInstance().getConnection().rollback();
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            } finally {
+                try {
+                    DbConnection.getInstance().getConnection().setAutoCommit(true);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+
+            refreshPage();
+            loadNextCustomerId();
+        }
     }
 
     @FXML
@@ -234,8 +270,81 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void updateClicked(ActionEvent event) {
+    void updateClicked(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String id = custid.getText();
+        String name = txtName.getText();
+        String nic = txtNic.getText();
+        String email = txtEmail.getText();
+        String phone = txtNumber.getText();
+        String vNmber = txtvNumber.getText();
 
+        String vechicleId = vehicleID.getText();
+        String selectedcatId = comboVehicleCategory.getValue();
+        String selectCatName = catagoryName.getText();
+
+        txtName.setStyle(txtName.getStyle() + "-fx-text-fill: blue;");
+        txtNic.setStyle(txtNic.getStyle() + "-fx-text-fill: blue;");
+        txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: blue;");
+        txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: blue;");
+        txtvNumber.setStyle(txtvNumber.getStyle() + "-fx-text-fill: blue;");
+
+        String namePattern = "^[A-Za-z ]+$";
+        String nicPattern = "^[0-9]{9}[vVxX]||[0-9]{12}$";
+        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+        String vechicleNum ="^((?!0000)([a-zA-Z]{1,3}|([0-9]{1,3}))-[0-9])|(([a-zA-Z]{1,3}|([0-9]{1,3}))-[0-9])(?!000)";
+
+        boolean isValidName = name.matches(namePattern);
+        boolean isValidNic = nic.matches(nicPattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValidPhone = phone.matches(phonePattern);
+        boolean isVechiclenum = vechicleNum.matches(vechicleNum);
+
+        if (!isValidName) {
+            txtName.setStyle(txtName.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidNic) {
+            txtNic.setStyle(txtNic.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidEmail) {
+            txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidPhone) {
+            txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidName) {
+            txtName.setStyle(txtName.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidNic) {
+            txtNic.setStyle(txtNic.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidEmail) {
+            txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: red;");
+        }
+        if (!isValidPhone) {
+            txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: red;");
+        }
+
+        if (isValidName && isValidNic && isValidEmail && isValidPhone){
+            CustomerDto customerDto = new CustomerDto(id,name,nic,email,phone);
+            VechicleDto vechicleDto = new VechicleDto(vechicleId,vNmber,id,selectedcatId);
+
+            boolean isUpdate = customerBO.update(customerDto);
+            System.out.println(isUpdate);
+            if(isUpdate) {
+                boolean isUpdate1 = vehicleBO.update(vechicleDto);
+            }
+
+            if (isUpdate) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Updated...!").show();
+                refreshPage();
+                loadNextCustomerId();
+//                loadVId();
+                loadTableData();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Fail to update customer...!").show();
+            }
+        }
     }
 
     @Override
@@ -296,6 +405,14 @@ public class CustomerController implements Initializable {
                     customerDTO.getVehicleCategory(),
                     customerDTO.getPricePerHourse()));
         }
+    }
+
+    public void refreshPage(){
+
+    }
+
+    public void  loadNextCustomerId(){
+//        customerBO.generateID();
     }
 
 }

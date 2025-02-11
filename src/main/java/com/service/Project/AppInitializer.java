@@ -11,7 +11,7 @@ public class AppInitializer extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent load=FXMLLoader.load(getClass().getResource("/View/LoginPage.fxmla"));
+        Parent load=FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
 
         Image image=new Image("/images/download.jpg");
 

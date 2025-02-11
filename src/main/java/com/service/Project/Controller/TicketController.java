@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 public class TicketController {
 
     @FXML
-    private ComboBox<?> comboReservationId;
+    private ComboBox<String> comboReservationId;
 
     @FXML
     private DatePicker datePickerIssueDate;

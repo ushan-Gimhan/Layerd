@@ -5,6 +5,7 @@ import com.service.Project.dao.custom.impl.StartPageImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -39,7 +40,7 @@ public class LoginPageController {
     }
     static  String name;
     String password;
-//    LoginPageModel loginPageModel = new LoginPageModel();
+
     StartPageDAO startPageDAO = new StartPageImpl();
     @FXML
     void clicked(ActionEvent event) throws IOException, SQLException, ClassNotFoundException {
@@ -50,12 +51,14 @@ public class LoginPageController {
        check();
 
     }
+
     void check() throws IOException, SQLException, ClassNotFoundException {
         if (startPageDAO.checkValidUser(name, password)) {
             navigate("/View/DashBoard.fxml");
         } else {
             txtpassword.setStyle(txtpassword.getStyle() + "-fx-border-color:red;");
             txtname.setStyle(txtname.getStyle() + ";-fx-border-color: red;");
+            new Alert(Alert.AlertType.INFORMATION, "Invalid User name Or password!!! tyr Again").show();
         }
     }
 
@@ -70,9 +73,4 @@ public class LoginPageController {
         loginphane.getChildren().add(newPane);
 
     }
-
-
-
-
-
 }

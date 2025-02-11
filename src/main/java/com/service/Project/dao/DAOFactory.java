@@ -1,9 +1,6 @@
 package com.service.Project.dao;
 
-import com.service.Project.dao.custom.impl.CVFormImpl;
-import com.service.Project.dao.custom.impl.EmployeeDAOImpl;
-import com.service.Project.dao.custom.impl.PaymentDAOImpl;
-import com.service.Project.dao.custom.impl.VehicleCatgoryImpl;
+import com.service.Project.dao.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -15,7 +12,7 @@ public class DAOFactory {
         return daoFactory;
     }
     public enum DAOType{
-        customer,employee,payment,vehiclec;
+        customer,employee,payment,vehiclec,vehicle,admin;
     }
     public SuperDAO getDao(DAOType type){
         switch (type){
@@ -27,6 +24,10 @@ public class DAOFactory {
                 return new PaymentDAOImpl();
                 case vehiclec:
                     return new VehicleCatgoryImpl();
+            case vehicle:
+                    return new VehicleDAOImpl();
+            case admin:
+                return new AdminDAOImpl();
                 default:
                     return null;
         }

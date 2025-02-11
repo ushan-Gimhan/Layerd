@@ -1,5 +1,8 @@
 package com.service.Project.Controller;
 
+import com.service.Project.View.Tm.FloorTm;
+import com.service.Project.View.Tm.ParkingLotTm;
+import com.service.Project.View.Tm.ParkingSpaceTm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,25 +33,25 @@ public class SpaceController {
     private Button btnUpdateSpace;
 
     @FXML
-    private ComboBox<?> comboFloorStatus;
+    private ComboBox<String> comboFloorStatus;
 
     @FXML
-    private ComboBox<?> comboLotStatus;
+    private ComboBox<String> comboLotStatus;
 
     @FXML
-    private ComboBox<?> comboSpaceStatus;
+    private ComboBox<String> comboSpaceStatus;
 
     @FXML
-    private TableColumn<?, ?> floorIdColumn;
+    private TableColumn<FloorTm,String> floorIdColumn;
 
     @FXML
-    private TableColumn<?, ?> floorIdSpaceColumn;
+    private TableColumn<FloorTm,String> floorIdSpaceColumn;
 
     @FXML
-    private TableColumn<?, ?> floorStatusColumn;
+    private TableColumn<FloorTm,String> floorStatusColumn;
 
     @FXML
-    private TableView<?> floorTable;
+    private TableView<FloorTm> floorTable;
 
     @FXML
     private TableColumn<?, ?> locationColumn;
@@ -63,10 +66,10 @@ public class SpaceController {
     private TableColumn<?, ?> lotStatusColumn;
 
     @FXML
-    private TableView<?> parkingLotTable;
+    private TableView<ParkingLotTm> parkingLotTable;
 
     @FXML
-    private TableView<?> parkingSpaceTable;
+    private TableView<ParkingSpaceTm> parkingSpaceTable;
 
     @FXML
     private TableColumn<?, ?> spaceIdColumn;

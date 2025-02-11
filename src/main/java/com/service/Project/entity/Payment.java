@@ -15,4 +15,7 @@ public class Payment {
     private Date payementDate;
     private String payementType;
     private String custId;
+
+    public Payment(String paymentId, double amount, String paymentDate, String paymentMethod, String customerName) {
+    }
 }

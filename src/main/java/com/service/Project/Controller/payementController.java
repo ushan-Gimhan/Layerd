@@ -30,13 +30,13 @@ public class payementController implements Initializable {
     private TableColumn<PaymentTm, Double> amountColumn;
 
     @FXML
-    private ComboBox<?> comboCustId;
+    private ComboBox<String> comboCustId;
 
     @FXML
-    private ComboBox<?> comboPaymentMethod;
+    private ComboBox<String> comboPaymentMethod;
 
     @FXML
-    private ComboBox<?> comboReservationId;
+    private ComboBox<String> comboReservationId;
 
     @FXML
     private TableColumn<PaymentTm,String> customerNameColumn;

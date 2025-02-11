@@ -9,6 +9,7 @@ import com.service.Project.dao.custom.PaymentDAO;
 import com.service.Project.dao.custom.impl.PaymentDAOImpl;
 import com.service.Project.entity.AllPayment;
 import com.service.Project.entity.Employee;
+import com.service.Project.entity.Payment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class PaymentBOImpl implements PaymentBO {
 
     @Override
     public boolean save(AllPaymentDto dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return paymentDAO.save(new Payment(dto.getPaymentId(),dto.getAmount(),dto.getPaymentDate(),dto.getPaymentMethod(),dto.getCustomerName()));
     }
 
     @Override

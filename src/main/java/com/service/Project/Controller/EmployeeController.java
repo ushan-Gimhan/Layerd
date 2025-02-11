@@ -1,20 +1,34 @@
 package com.service.Project.Controller;
 
+import com.service.Project.DBConnection.DbConnection;
 import com.service.Project.Model.EmployeeDto;
 import com.service.Project.View.Tm.EmployeeTm;
+import com.service.Project.bo.custom.AdminBO;
 import com.service.Project.bo.custom.EmployeeBO;
+import com.service.Project.bo.custom.Impl.AdminBOImpl;
 import com.service.Project.bo.custom.Impl.EmployeeBOImpl;
 import com.service.Project.dao.custom.EmployeeDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -81,6 +95,8 @@ public class EmployeeController  implements Initializable {
     private TextField txtName;
 
     EmployeeBO employeeBO = new EmployeeBOImpl();
+    AdminBO adminBO= new AdminBOImpl();
+
 
     @FXML
     void addEmployee(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -116,8 +132,8 @@ public class EmployeeController  implements Initializable {
 
             boolean isSaved = employeeBO.save(customerDTO);
             if (isSaved) {
-                refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Employee saved...!").show();
+                refreshPage();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to save employee...!").show();
             }
@@ -171,7 +187,26 @@ public class EmployeeController  implements Initializable {
 
     @FXML
     void genarateReport(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/Reports/U_Customer.jrxml")
+            );
 
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    null,
+                    connection
+            );
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -181,7 +216,38 @@ public class EmployeeController  implements Initializable {
 
     @FXML
     void sendMail(ActionEvent event) {
+        EmployeeTm selectdedTm = employeeTable.getSelectionModel().getSelectedItem();
 
+        if (selectdedTm == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select customer..!");
+            return;
+        }
+
+        try {
+            FXMLLoader load = new FXMLLoader(getClass().getResource("/View/MailView.fxml"));
+            Parent root = load.load();
+
+            MailController sendMainController = load.getController();
+
+            String mail = selectdedTm.getEmail();
+            sendMainController.setCustomerEmail(mail);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Send email");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/mail_icon.png")));
+
+            // Set window as modal
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Window underWindow = btnUpdate.getScene().getWindow();
+            stage.initOwner(underWindow);
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to load ui..!");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -191,8 +257,7 @@ public class EmployeeController  implements Initializable {
         String nic = txtDesignation.getText();
         String email = txtEmail.getText();
         String phone = txtMobileNumber.getText();
-//        String adminID = adminIDCombo.getValue();
-        String adminID="A001";
+        String adminID = adminIDCombo.getValue();
 
         String namePattern = "^[A-Za-z ]+$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -268,6 +333,7 @@ public class EmployeeController  implements Initializable {
         try {
             loadTableDeatails();
             nextEmployeeID();
+            loadIdminIds();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -287,13 +353,19 @@ public class EmployeeController  implements Initializable {
         txtMobileNumber.setText("");
         txtName.setText("");
 //        txtaddmin.setText("");
-//        adminIDCombo.setValue("");
+        adminIDCombo.setValue("");
         nextEmployeeID();
-//        loadTableDeatails();
+        loadTableDeatails();
     }
     void nextEmployeeID() throws SQLException, ClassNotFoundException {
         String nextCustomerId = employeeBO.generateID();
         txtempid.setText(nextCustomerId);
+    }
+    void loadIdminIds() throws SQLException, ClassNotFoundException {
+        ArrayList<String> adminIds = adminBO.getAllAdminIds();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(adminIds);
+        adminIDCombo.setItems(observableList);
     }
 
 }

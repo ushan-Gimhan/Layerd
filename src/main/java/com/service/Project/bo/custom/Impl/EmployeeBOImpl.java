@@ -1,14 +1,26 @@
 package com.service.Project.bo.custom.Impl;
 
+import com.service.Project.Controller.MailController;
 import com.service.Project.Model.CvFormDto;
 import com.service.Project.Model.EmployeeDto;
+import com.service.Project.View.Tm.EmployeeTm;
 import com.service.Project.bo.custom.EmployeeBO;
 import com.service.Project.dao.DAOFactory;
 import com.service.Project.dao.custom.CvFormDAO;
 import com.service.Project.dao.custom.EmployeeDAO;
 import com.service.Project.entity.CVForm;
 import com.service.Project.entity.Employee;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -33,7 +45,7 @@ public class EmployeeBOImpl implements EmployeeBO {
 
     @Override
     public boolean update(EmployeeDto dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return employeeDAO.update(new Employee(dto.getEmployeeId(),dto.getEmployeeName(),dto.getDesignation(),dto.getEmail(),dto.getPhoneNumber(),dto.getAdminId()));
     }
 
     @Override
@@ -50,4 +62,5 @@ public class EmployeeBOImpl implements EmployeeBO {
     public String generateID() throws SQLException, ClassNotFoundException {
         return  employeeDAO.generateID();
     }
+
 }

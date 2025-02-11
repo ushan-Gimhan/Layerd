@@ -1,5 +1,6 @@
 package com.service.Project.Controller;
 
+import com.service.Project.View.Tm.ReservationTm;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -13,67 +14,67 @@ import javafx.scene.input.MouseEvent;
 public class reservationController {
 
     @FXML
-    private ComboBox<?> comboCustomerId;
+    private ComboBox<String> comboCustomerId;
 
     @FXML
     private DatePicker comboEndDate;
 
     @FXML
-    private ComboBox<?> comboEndTime;
+    private ComboBox<String> comboEndTime;
 
     @FXML
-    private ComboBox<?> comboFloorId;
+    private ComboBox<String> comboFloorId;
 
     @FXML
-    private ComboBox<?> comboLotId;
+    private ComboBox<String> comboLotId;
 
     @FXML
-    private ComboBox<?> comboSpaceId;
+    private ComboBox<String> comboSpaceId;
 
     @FXML
-    private ComboBox<?> comboStartTime;
+    private ComboBox<String> comboStartTime;
 
     @FXML
-    private TableColumn<?, ?> custAmountColum;
+    private TableColumn<ReservationTm, String> custAmountColum;
 
     @FXML
-    private TableColumn<?, ?> customerIdColumn;
+    private TableColumn<ReservationTm, String> customerIdColumn;
 
     @FXML
-    private TableColumn<?, ?> customerNameColumn;
+    private TableColumn<ReservationTm, String> customerNameColumn;
 
     @FXML
     private DatePicker datePickerReservationDate;
 
     @FXML
-    private TableColumn<?, ?> endDateColumn;
+    private TableColumn<ReservationTm, String> endDateColumn;
 
     @FXML
-    private TableColumn<?, ?> endTimeColumn;
+    private TableColumn<ReservationTm, String> endTimeColumn;
 
     @FXML
-    private TableColumn<?, ?> floorIdColumn;
+    private TableColumn<ReservationTm, String> floorIdColumn;
 
     @FXML
     private Label lblAmount;
 
     @FXML
-    private TableColumn<?, ?> lotIdColumn;
+    private TableColumn<ReservationTm, String> lotIdColumn;
 
     @FXML
-    private TableColumn<?, ?> reservationDateColumn;
+    private TableColumn<ReservationTm, String> reservationDateColumn;
 
     @FXML
-    private TableColumn<?, ?> reservationIdColumn;
+    private TableColumn<ReservationTm, String> reservationIdColumn;
 
     @FXML
-    private TableView<?> reservationTable;
+    private TableView<ReservationTm> reservationTable;
 
     @FXML
-    private TableColumn<?, ?> spaceIdColumn;
+    private TableColumn<ReservationTm, String> spaceIdColumn;
 
     @FXML
-    private TableColumn<?, ?> startTimeColumn;
+    private TableColumn<ReservationTm, String> startTimeColumn;
 
     @FXML
     private Label txtAmount;
