@@ -1,5 +1,6 @@
 package com.service.Project.dao.custom.impl;
 
+import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.CvFormDto;
 import com.service.Project.View.Tm.CvFromTm;
 import com.service.Project.dao.CrudUtil;
@@ -82,5 +83,20 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         // Return the list of item IDs
         return custIds;
+    }
+
+    @Override
+    public CustomerDto FindById(String id) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select * from customer where cust_id=?", id);
+
+        if (rst.next()) {
+            return new CustomerDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getString(3),
+                    rst.getString(4),
+                    rst.getString(5));
+        }
+        return null;
     }
 }

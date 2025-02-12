@@ -27,8 +27,14 @@ public class PaymentDAOImpl implements PaymentDAO {
     }
 
     @Override
-    public boolean update(Payment dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean update(Payment paydto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE payment SET payementAmount = ?, payementDate = ?, payementType = ?, custId = ? WHERE payementId = ?",
+                paydto.getPayementAmount(),
+                paydto.getPayementDate(),
+                paydto.getPayementType(),
+                paydto.getCustId(),
+                paydto.getPayementId());
+
     }
 
     @Override
@@ -38,7 +44,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return CrudUtil.execute("DELETE FROM payment WHERE payementId = ?",id);
     }
 
     @Override

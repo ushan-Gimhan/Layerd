@@ -12,13 +12,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -212,8 +217,13 @@ public class reservationController implements Initializable {
     }
 
     @FXML
-    void makePayment(ActionEvent event) {
+    void makePayment(ActionEvent event) throws IOException {
+        Parent load= FXMLLoader.load(getClass().getResource("/View/payemnt.fxml"));
 
+        Scene scene = new Scene(load);
+        Stage stage= new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -236,14 +246,14 @@ public class reservationController implements Initializable {
     }
 
     @FXML
-    void selectCustId(MouseEvent event) {
+    void selectCustId(MouseEvent event) throws SQLException, ClassNotFoundException {
         String selectecustId = comboCustomerId.getSelectionModel().getSelectedItem();
-//        CustomerDto CatDTO = customerModel.findById(selectecustId);
-//
-//        if (CatDTO != null) {
-//            txtCustomerName.setText(CatDTO.getName());
-//            String email = CatDTO.getEmail();
-//        }
+        CustomerDto CatDTO = customerBO.FindById(selectecustId);
+
+        if (CatDTO != null) {
+            txtCustomerName.setText(CatDTO.getName());
+            String email = CatDTO.getEmail();
+        }
     }
 
     @FXML

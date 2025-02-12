@@ -143,6 +143,7 @@ public class EmployeeController  implements Initializable {
 
     @FXML
     void adminonAction(ActionEvent event) {
+        String selectedCatId = adminIDCombo.getSelectionModel().getSelectedItem();
 
     }
 

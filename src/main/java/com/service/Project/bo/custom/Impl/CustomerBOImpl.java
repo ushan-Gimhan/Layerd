@@ -45,4 +45,9 @@ public class CustomerBOImpl implements CustomerBO {
     public ArrayList<String> getAllCustIds() throws SQLException, ClassNotFoundException {
         return customerBO.getAllCustiIds();
     }
+
+    @Override
+    public CustomerDto FindById(String id) throws SQLException, ClassNotFoundException {
+        return null;
+    }
 }

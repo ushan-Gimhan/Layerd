@@ -15,4 +15,5 @@ public interface ReservationBO {
     boolean delete(String id) throws SQLException, ClassNotFoundException ;
     String generateID() throws SQLException, ClassNotFoundException ;
     ArrayList<Reservationdto> getAllData() throws SQLException, ClassNotFoundException;
+    ArrayList<String> getAllIds() throws SQLException, ClassNotFoundException;
 }

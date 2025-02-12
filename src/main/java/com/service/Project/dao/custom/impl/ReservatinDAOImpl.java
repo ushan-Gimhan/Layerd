@@ -89,4 +89,20 @@ public class ReservatinDAOImpl implements ReservationDAO {
         }
         return reservations;
     }
+
+    @Override
+    public ArrayList<String> getAllIds() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select res_id from reservation");
+
+        // Create an ArrayList to store the item IDs
+        ArrayList<String> Ids = new ArrayList<>();
+
+        // Iterate through the result set and add each item ID to the list
+        while (rst.next()) {
+            Ids.add(rst.getString(1));
+        }
+
+        // Return the list of item IDs
+        return Ids;
+    }
 }

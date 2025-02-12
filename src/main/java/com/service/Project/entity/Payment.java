@@ -2,6 +2,7 @@ package com.service.Project.entity;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -16,6 +17,7 @@ public class Payment {
     private String payementType;
     private String custId;
 
-    public Payment(String paymentId, double amount, String paymentDate, String paymentMethod, String customerName) {
+
+    public Payment(String payementId, Double payementAmount, LocalDate payementDate, String payementType, String custId) {
     }
 }

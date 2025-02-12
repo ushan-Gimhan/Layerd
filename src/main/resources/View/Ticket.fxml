@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane style="-fx-background-color: #F0F4F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.Controller.TicketController">
+<AnchorPane style="-fx-background-color: #F0F4F8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.Controller.ScreenController">
     <children>
         <VBox AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <VBox spacing="15.0" style="-fx-padding: 20; -fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-border-color: #CCCCCC; -fx-border-radius: 8;" VBox.vgrow="ALWAYS">

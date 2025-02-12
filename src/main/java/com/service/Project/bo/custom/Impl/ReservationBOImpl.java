@@ -55,4 +55,9 @@ public class ReservationBOImpl implements ReservationBO {
         }
         return reservationDtos;
     }
+
+    @Override
+    public ArrayList<String> getAllIds() throws SQLException, ClassNotFoundException {
+        return null;
+    }
 }

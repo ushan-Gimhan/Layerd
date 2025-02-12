@@ -30,12 +30,15 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -183,18 +186,58 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void deleteClicked(ActionEvent event) {
+    void deleteClicked(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String customerId = custid.getText();
+        String vehicleId = vehicleID.getText();
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> optionalButtonType = alert.showAndWait();
+
+
+        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
+
+            boolean isDeleted = customerBO.delete(customerId);
+            System.out.println(isDeleted);
+            if (isDeleted) {
+                boolean isDeleted1= vehicleBO.delete(vehicleId);
+                System.out.println(isDeleted1);}
+
+            if (isDeleted ) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer deleted...!").show();
+                refreshPage();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Fail to delete customer...!").show();
+            }
+        }
     }
 
     @FXML
     void genarateReport(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/Reports/U_Customer.jrxml")
+            );
 
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    null,
+                    connection
+            );
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
-    void resetClicked(ActionEvent event) {
-
+    void resetClicked(ActionEvent event) throws SQLException, ClassNotFoundException {
+        refreshPage();
     }
 
     @FXML

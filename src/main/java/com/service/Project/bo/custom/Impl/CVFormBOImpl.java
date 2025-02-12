@@ -14,7 +14,6 @@ import com.service.Project.dao.custom.VehicleDAO;
 import com.service.Project.entity.CVForm;
 import com.service.Project.entity.Customer;
 import com.service.Project.entity.Vehicle;
-import javafx.scene.control.Alert;
 
 
 import java.sql.Connection;
