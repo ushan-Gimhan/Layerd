@@ -1,5 +1,6 @@
 package com.service.Project.Controller;
 
+import com.service.Project.DBConnection.DbConnection;
 import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.ResavationDto;
 import com.service.Project.Model.Reservationdto;
@@ -15,8 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -109,7 +113,26 @@ public class reservationController implements Initializable {
 
     @FXML
     void GenarateReport(ActionEvent event) {
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    getClass().getResourceAsStream("/Reports/U_Reservation.jrxml")
+            );
 
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    jasperReport,
+                    null,
+                    connection
+            );
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -144,9 +167,9 @@ public class reservationController implements Initializable {
             boolean isSaved = reservationBO.save(resavationDto);
 
             if (isSaved) {
-//                clearInputs();
-//                nextReservationId();
-//                loadTableData();
+                clearInputs();
+                txtReservationId.setText(reservationBO.generateID());
+                loadTableData();
                 new Alert(Alert.AlertType.INFORMATION, "Add Reservation SuccessFully...!").show();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to Add reservation...!").show();
@@ -156,7 +179,7 @@ public class reservationController implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Reservation added successfully!");
             alert.show();
-//            loadTableData();
+            loadTableData();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to add reservation. " + e.getMessage());
             alert.show();
@@ -165,19 +188,7 @@ public class reservationController implements Initializable {
 
     @FXML
     void clearFields(ActionEvent event) throws SQLException, ClassNotFoundException {
-        txtReservationId.clear();
-        comboCustomerId.setValue(null);
-        comboLotId.setValue(null);
-        comboFloorId.setValue(null);
-        comboSpaceId.setValue(null);
-        datePickerReservationDate.setValue(null);
-        comboStartTime.setValue(null);
-        comboEndTime.setValue(null);
-        comboEndDate.setValue(null);
-        txtAmount.setText(String.valueOf(0.00));
-        txtCustomerName.clear();
-        loadTableData();
-        txtReservationId.setText(reservationBO.generateID());
+        clearInputs();
     }
 
     @FXML
@@ -192,8 +203,8 @@ public class reservationController implements Initializable {
             boolean isDeleted = reservationBO.delete(resId);
             if (isDeleted ) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted...!").show();
-//                clearInputs();
-//                loadTableData();
+                clearInputs();
+                loadTableData();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to delete customer...!").show();
             }
@@ -207,7 +218,21 @@ public class reservationController implements Initializable {
 
     @FXML
     void reservationClicked(MouseEvent event) {
+        ReservationTm reservation = reservationTable.getSelectionModel().getSelectedItem();
 
+        if(reservation != null) {
+            txtReservationId.setText(reservation.getReservationId());
+            comboCustomerId.setValue(reservation.getCustomerId());
+            comboLotId.setValue(reservation.getLotId());
+            comboFloorId.setValue(reservation.getFloorId());
+            comboSpaceId.setValue(reservation.getSpaceId());
+//            datePickerReservationDate.setValue(reservation.getReservationDate().toString().);
+//            comboEndDate.setValue(reservation.getEndDate().toString());
+            comboStartTime.setValue(reservation.getStartTime().toString());
+            comboEndTime.setValue(reservation.getEndTime().toString());
+            txtCustomerName.setText(reservation.getCustomerName());
+            txtAmount.setText(String.valueOf(reservation.getAmount()));
+        }
     }
 
     @FXML
@@ -241,8 +266,8 @@ public class reservationController implements Initializable {
 
         if (isUpdated) {
             new Alert(Alert.AlertType.INFORMATION, "Reservation Updated...!").show();
-//            loadTableData();
-//            clearInputs();
+            loadTableData();
+            clearInputs();
         } else {
             new Alert(Alert.AlertType.ERROR, "Fail to update Reservation...!").show();
         }
@@ -350,5 +375,20 @@ public class reservationController implements Initializable {
             reservationTmObservableList.add(reservationTm);
         }
         reservationTable.setItems(reservationTmObservableList);
+    }
+    void clearInputs() throws SQLException, ClassNotFoundException {
+        txtReservationId.clear();
+        comboCustomerId.setValue(null);
+        comboLotId.setValue(null);
+        comboFloorId.setValue(null);
+        comboSpaceId.setValue(null);
+        datePickerReservationDate.setValue(null);
+        comboStartTime.setValue(null);
+        comboEndTime.setValue(null);
+        comboEndDate.setValue(null);
+        txtAmount.setText(String.valueOf(0.00));
+        txtCustomerName.clear();
+        loadTableData();
+        txtReservationId.setText(reservationBO.generateID());
     }
 }

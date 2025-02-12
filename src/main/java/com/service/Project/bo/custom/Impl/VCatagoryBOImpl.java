@@ -47,4 +47,14 @@ public class VCatagoryBOImpl implements VCatagoryBO {
     public String generateID() throws SQLException, ClassNotFoundException {
         return vcatogry.generateID();
     }
+
+    @Override
+    public ArrayList<String> getAllCatagoryIds() throws SQLException, ClassNotFoundException {
+        return vcatogry.getAllCatagoryIds();
+    }
+
+    @Override
+    public VechicleCatagoryDto FindById(String id) throws SQLException, ClassNotFoundException {
+        return vcatogry.findById(id);
+    }
 }

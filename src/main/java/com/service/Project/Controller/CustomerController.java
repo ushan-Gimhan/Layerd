@@ -3,14 +3,19 @@ package com.service.Project.Controller;
 import com.service.Project.DBConnection.DbConnection;
 import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.CvFormDto;
+import com.service.Project.Model.VechicleCatagoryDto;
 import com.service.Project.Model.VechicleDto;
 import com.service.Project.View.Tm.CvFromTm;
 import com.service.Project.bo.custom.CVFormBO;
 import com.service.Project.bo.custom.CustomerBO;
 import com.service.Project.bo.custom.Impl.CVFormBOImpl;
 import com.service.Project.bo.custom.Impl.CustomerBOImpl;
+import com.service.Project.bo.custom.Impl.VCatagoryBOImpl;
 import com.service.Project.bo.custom.Impl.VehicleBOImpl;
+import com.service.Project.bo.custom.VCatagoryBO;
 import com.service.Project.bo.custom.VehicleBO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +24,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +43,7 @@ public class CustomerController implements Initializable {
     CVFormBO cvFormBO = new CVFormBOImpl();
     CustomerBO customerBO = new CustomerBOImpl();
     VehicleBO vehicleBO = new VehicleBOImpl();
+    VCatagoryBO vCatagoryBO = new VCatagoryBOImpl();
 
     @FXML
 
@@ -145,12 +154,32 @@ public class CustomerController implements Initializable {
 
     @FXML
     void clikedTable(MouseEvent event) {
+        CvFromTm cvFromTm =  customerTable.getSelectionModel().getSelectedItem();
+        if (cvFromTm != null) {
+            custid.setText(cvFromTm.getCustomerId());
+            txtName.setText(cvFromTm.getName());
+            txtNic.setText(cvFromTm.getNIC());
+            txtEmail.setText(cvFromTm.getEmail());
+            txtNumber.setText(cvFromTm.getPhone());
+            txtvNumber.setText(cvFromTm.getVehicleNumber());
+            comboVehicleCategory.setValue(cvFromTm.getVehicleCategory());
 
+            btnSave.setDisable(true);
+
+            btnDelete.setDisable(false);
+            btnUpdate.setDisable(false);
+        }
     }
 
     @FXML
-    void cmbCat(ActionEvent event) {
+    void cmbCat(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String selectedCatId = comboVehicleCategory.getSelectionModel().getSelectedItem();
+        VechicleCatagoryDto CatDTO = vCatagoryBO.FindById(selectedCatId);
 
+        if (CatDTO != null) {
+            catagoryName.setText(CatDTO.getVCatagoryName());
+            priceLable.setText(String.valueOf(CatDTO.getPricePerHoure()));
+        }
     }
 
     @FXML
@@ -223,50 +252,53 @@ public class CustomerController implements Initializable {
             CustomerDto customerDto = new CustomerDto(id, name, nic, email, phone);
             VechicleDto vechicleDto = new VechicleDto(vechicleId,vNmber,id,selectedcatId);
 
-            try {
-                Connection connection = DbConnection.getInstance().getConnection();
-                connection.setAutoCommit(false);
+            boolean isSved=cvFormBO.AllSave(customerDto,vechicleDto);
 
-                boolean isSaved = customerBO.save(customerDto);
-                if (isSaved) {
-                    boolean isvSaved = vehicleBO.save(vechicleDto);
-                    if (isvSaved) {
-                        connection.commit();
-                        new Alert(Alert.AlertType.INFORMATION, "Customer and Vehicle Added Successfully!").show();
-                        refreshPage();
-                    } else {
-                        connection.rollback();
-                        new Alert(Alert.AlertType.ERROR, "Failed to Add Vehicle. Transaction Rolled Back!").show();
-                    }
-                } else {
-                    connection.rollback();
-                    new Alert(Alert.AlertType.ERROR, "Failed to Add Customer. Transaction Rolled Back!").show();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
-                try {
-                    DbConnection.getInstance().getConnection().rollback();
-                } catch (SQLException rollbackEx) {
-                    rollbackEx.printStackTrace();
-                }
-            } finally {
-                try {
-                    DbConnection.getInstance().getConnection().setAutoCommit(true);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+            if(isSved){
+                new Alert(Alert.AlertType.INFORMATION, "Customer and Vehicle Added Successfully!").show();
+                    refreshPage();
             }
-
-
-            refreshPage();
-            loadNextCustomerId();
+            else {
+                new Alert(Alert.AlertType.ERROR, "Failed to Add Vehicle. Transaction Rolled Back!").show();
+            }
         }
+
     }
 
     @FXML
     void sendMail(ActionEvent event) {
+        CvFromTm selectdedTm = customerTable.getSelectionModel().getSelectedItem();
 
+        if (selectdedTm == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select customer..!");
+            return;
+        }
+
+        try {
+            FXMLLoader load = new FXMLLoader(getClass().getResource("/View/MailView.fxml"));
+            Parent root = load.load();
+
+            MailController sendMainController = load.getController(); //
+
+            String mail = selectdedTm.getEmail();
+            sendMainController.setCustomerEmail(mail);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Send email");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/Images/mail_icon.png")));
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            Window underWindow = btnUpdate.getScene().getWindow();
+            stage.initOwner(underWindow);
+
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to load ui..!");
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -329,18 +361,11 @@ public class CustomerController implements Initializable {
             CustomerDto customerDto = new CustomerDto(id,name,nic,email,phone);
             VechicleDto vechicleDto = new VechicleDto(vechicleId,vNmber,id,selectedcatId);
 
-            boolean isUpdate = customerBO.update(customerDto);
-            System.out.println(isUpdate);
-            if(isUpdate) {
-                boolean isUpdate1 = vehicleBO.update(vechicleDto);
-            }
+            boolean isUpdate = cvFormBO.AllUpdate(customerDto,vechicleDto);
 
             if (isUpdate) {
                 new Alert(Alert.AlertType.INFORMATION, "Customer Updated...!").show();
                 refreshPage();
-                loadNextCustomerId();
-//                loadVId();
-                loadTableData();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to update customer...!").show();
             }
@@ -358,17 +383,32 @@ public class CustomerController implements Initializable {
         vehiclecata.setCellValueFactory(new PropertyValueFactory<>("vehicleCategory"));
         pricePerH.setCellValueFactory(new PropertyValueFactory<>("pricePerHourse"));
 
-        //Add data to combobox
-//        ArrayList<String> Vehilce= vehicleCatagoryModel.getAllCataoryid();
-//
-//        ObservableList<String> observable = FXCollections.observableArrayList();
-//        observable.addAll(Vehilce);
-//        comboVehicleCategory.setItems(observable);
-//
-//
-//
-//        loadNextCustomerId();
-////        loadVId();
+
+
+//        Add data to combobox
+        ArrayList<String> Vehilce= null;
+        try {
+            Vehilce = vCatagoryBO.getAllCatagoryIds();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        ObservableList<String> observable = FXCollections.observableArrayList();
+        observable.addAll(Vehilce);
+        comboVehicleCategory.setItems(observable);
+
+
+        try {
+            loadNextCustomerId();
+            loadVId();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         try {
             loadTableData();
         } catch (SQLException e) {
@@ -384,17 +424,6 @@ public class CustomerController implements Initializable {
 
 
         for (CvFormDto customerDTO : cvFromTms) {
-//            CvFromTm customerTM = new CvFromTm(
-//                    customerDTO.getCustomerId(),
-//                    customerDTO.getName(),
-//                    customerDTO.getNIC(),
-//                    customerDTO.getEmail(),
-//                    customerDTO.getPhone(),
-//                    customerDTO.getVehicleNumber(),
-//                    customerDTO.getVehicleCategory(),
-//                    customerDTO.getPricePerHourse()
-//            );
-//            customerTable.setItems(customerTM);
             customerTable.getItems().add(new CvFromTm(
                     customerDTO.getCustomerId(),
                     customerDTO.getName(),
@@ -407,12 +436,40 @@ public class CustomerController implements Initializable {
         }
     }
 
-    public void refreshPage(){
+    public void refreshPage() throws SQLException, ClassNotFoundException {
+        loadNextCustomerId();
+        loadVId();
+        loadTableData();
 
+        txtName.setStyle(txtName.getStyle() + "-fx-text-fill: blue;");
+        txtNic.setStyle(txtNic.getStyle() + "-fx-text-fill: blue;");
+        txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: blue;");
+        txtNumber.setStyle(txtNumber.getStyle() + "-fx-text-fill: blue;");
+        txtvNumber.setStyle(txtvNumber.getStyle() + "-fx-text-fill: blue;");
+
+        txtName.setText("");
+        txtNic.setText("");
+        txtEmail.setText("");
+        txtNumber.setText("");
+        txtvNumber.setText("");
+        comboVehicleCategory.setValue("");
+        catagoryName.setText("");
+        pricePerH.setText("");
+
+        btnSave.setDisable(false);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
     }
 
-    public void  loadNextCustomerId(){
-//        customerBO.generateID();
+    public void  loadNextCustomerId() throws SQLException, ClassNotFoundException {
+        String nextCustomerId = customerBO.generateID();
+        custid.setText(nextCustomerId);
+    }
+
+    public void loadVId() throws SQLException, ClassNotFoundException {
+        String nextVehicleId = vehicleBO.generateID();
+        vehicleID.setText(nextVehicleId);
+
     }
 
 }

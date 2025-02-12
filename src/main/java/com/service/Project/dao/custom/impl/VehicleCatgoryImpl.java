@@ -67,4 +67,28 @@ public class VehicleCatgoryImpl implements VehicleCtagoryDAO {
         }
         return "VC001";
     }
+
+    @Override
+    public ArrayList<String> getAllCatagoryIds() throws SQLException, ClassNotFoundException {
+        ResultSet result = CrudUtil.execute("select category_id from vehicle_category");
+        ArrayList<String> ids = new ArrayList<>();
+
+        while (result.next()) {
+            ids.add(result.getString(1));
+        }
+        return ids;
+    }
+
+    @Override
+    public VechicleCatagoryDto findById(String id) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select * from vehicle_category where category_id=?", id);
+
+        if (rst.next()) {
+            return new VechicleCatagoryDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getDouble(3)         );
+        }
+        return null;
+    }
 }

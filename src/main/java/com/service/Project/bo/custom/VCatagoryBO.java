@@ -12,4 +12,6 @@ public interface VCatagoryBO {
     boolean exist(String id) throws SQLException, ClassNotFoundException ;
     boolean delete(String id) throws SQLException, ClassNotFoundException ;
     String generateID() throws SQLException, ClassNotFoundException ;
+    ArrayList<String> getAllCatagoryIds() throws SQLException, ClassNotFoundException;
+    VechicleCatagoryDto FindById(String id) throws SQLException, ClassNotFoundException;
 }

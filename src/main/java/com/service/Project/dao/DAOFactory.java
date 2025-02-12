@@ -12,7 +12,7 @@ public class DAOFactory {
         return daoFactory;
     }
     public enum DAOType{
-        customer,employee,payment,vehiclec,vehicle,admin,parkinglot,floor,space,accescard,reservation;
+        customer,employee,payment,vehiclec,vehicle,admin,parkinglot,floor,space,accescard,reservation,cvform;
     }
     public SuperDAO getDao(DAOType type){
         switch (type){
@@ -38,6 +38,8 @@ public class DAOFactory {
                 return new AccessCardDAOImpl();
             case reservation:
                 return new ReservatinDAOImpl();
+                case cvform:
+                    return new CVFormImpl();
             default:
                 return null;
         }

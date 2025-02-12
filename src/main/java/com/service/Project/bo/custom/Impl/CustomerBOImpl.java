@@ -23,7 +23,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean update(CustomerDto dto) throws SQLException, ClassNotFoundException {
-        return false;
+        return customerBO.update(new Customer(dto.getCustomerId(),dto.getName(),dto.getNIC(),dto.getEmail(), dto.getPhone()));
     }
 
     @Override
@@ -33,12 +33,12 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return customerBO.delete(id);
     }
 
     @Override
     public String generateID() throws SQLException, ClassNotFoundException {
-        return "";
+        return customerBO.generateID();
     }
 
     @Override
