@@ -15,4 +15,5 @@ public interface FloorBO {
     void delete(String id) throws SQLException, ClassNotFoundException ;
     String generateID() throws SQLException, ClassNotFoundException ;
     public CvFromTm search(String id) throws SQLException, ClassNotFoundException;
+    ArrayList<String> getAllfloors() throws SQLException, ClassNotFoundException;
 }

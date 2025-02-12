@@ -12,4 +12,5 @@ public interface ParkingLotBO {
     boolean exist(String id) throws SQLException, ClassNotFoundException ;
     boolean delete(String id) throws SQLException, ClassNotFoundException ;
     String generateID() throws SQLException, ClassNotFoundException ;
+    ArrayList<String> getAllLotId() throws SQLException, ClassNotFoundException;
 }

@@ -1,17 +1,16 @@
-package com.service.Project.Model;
+package com.service.Project.entity;
 
 import lombok.*;
 
 import java.sql.Time;
 import java.util.Date;
 
-
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reservation {
+public class AllReservation {
     private String reservationId;
     private String customerId;
     private String lotId;
@@ -23,5 +22,4 @@ public class Reservation {
     private Time  endTime;
     private String customerName;
     private Double amount;
-
 }

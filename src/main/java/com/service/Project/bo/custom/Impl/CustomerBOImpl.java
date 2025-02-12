@@ -40,4 +40,9 @@ public class CustomerBOImpl implements CustomerBO {
     public String generateID() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public ArrayList<String> getAllCustIds() throws SQLException, ClassNotFoundException {
+        return customerBO.getAllCustiIds();
+    }
 }

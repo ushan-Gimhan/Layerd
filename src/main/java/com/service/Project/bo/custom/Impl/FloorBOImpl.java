@@ -54,4 +54,9 @@ public class FloorBOImpl implements FloorBO {
     public CvFromTm search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
+
+    @Override
+    public ArrayList<String> getAllfloors() throws SQLException, ClassNotFoundException {
+        return floorIdDAO.getFloors();
+    }
 }

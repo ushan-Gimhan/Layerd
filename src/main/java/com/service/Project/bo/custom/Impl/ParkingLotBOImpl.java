@@ -48,4 +48,10 @@ public class ParkingLotBOImpl implements ParkingLotBO {
     public String generateID() throws SQLException, ClassNotFoundException {
         return parkingLotDAO.generateID();
     }
+
+    @Override
+    public ArrayList<String> getAllLotId() throws SQLException, ClassNotFoundException {
+        ArrayList<String> lots=parkingLotDAO.getAllLotIds();
+        return lots;
+    }
 }

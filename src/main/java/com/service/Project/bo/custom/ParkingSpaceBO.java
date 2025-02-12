@@ -14,4 +14,5 @@ public interface ParkingSpaceBO {
     boolean exist(String id) throws SQLException, ClassNotFoundException ;
     void delete(String id) throws SQLException, ClassNotFoundException ;
     String generateID() throws SQLException, ClassNotFoundException ;
+    ArrayList<String> getAllFloorIds() throws SQLException, ClassNotFoundException;
 }

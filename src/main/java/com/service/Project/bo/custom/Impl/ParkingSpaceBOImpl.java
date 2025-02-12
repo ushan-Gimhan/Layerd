@@ -48,4 +48,9 @@ public class ParkingSpaceBOImpl implements ParkingSpaceBO {
     public String generateID() throws SQLException, ClassNotFoundException {
         return parkingSpace.generateID();
     }
+
+    @Override
+    public ArrayList<String> getAllFloorIds() throws SQLException, ClassNotFoundException {
+        return parkingSpace.getAllIds();
+    }
 }

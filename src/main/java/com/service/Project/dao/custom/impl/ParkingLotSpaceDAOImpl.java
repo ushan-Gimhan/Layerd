@@ -63,4 +63,15 @@ public class ParkingLotSpaceDAOImpl implements ParkingSpaceDAO {
         }
         return "PS001";
     }
+
+    @Override
+    public ArrayList<String> getAllIds() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select space_id from parking_space");
+
+        ArrayList<String> itemIds = new ArrayList<>();
+        while (rst.next()) {
+            itemIds.add(rst.getString(1));
+        }
+        return itemIds;
+    }
 }

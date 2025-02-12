@@ -42,4 +42,21 @@ public class CustomerDAOImpl implements CustomerDAO {
     public String generateID() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public ArrayList<String> getAllCustiIds() throws SQLException, ClassNotFoundException {
+        // Execute SQL query to get all item IDs
+        ResultSet rst = CrudUtil.execute("select cust_id from customer");
+
+        // Create an ArrayList to store the item IDs
+        ArrayList<String> custIds = new ArrayList<>();
+
+        // Iterate through the result set and add each item ID to the list
+        while (rst.next()) {
+            custIds.add(rst.getString(1));
+        }
+
+        // Return the list of item IDs
+        return custIds;
+    }
 }

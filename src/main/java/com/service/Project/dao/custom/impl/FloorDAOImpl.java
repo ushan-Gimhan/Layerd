@@ -62,4 +62,20 @@ public class FloorDAOImpl implements FloorIdDAO {
         }
         return "F001";
     }
+
+    @Override
+    public ArrayList<String> getFloors() throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.execute("select floor_id from floor");
+
+        // Create an ArrayList to store the item IDs
+        ArrayList<String> itemIds = new ArrayList<>();
+
+        // Iterate through the result set and add each item ID to the list
+        while (rst.next()) {
+            itemIds.add(rst.getString(1));
+        }
+
+        // Return the list of item IDs
+        return itemIds;
+    }
 }
