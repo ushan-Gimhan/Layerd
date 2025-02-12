@@ -2,12 +2,13 @@ package com.service.Project.bo.custom;
 
 import com.service.Project.Model.AdminDto;
 import com.service.Project.Model.CustomerDto;
+import com.service.Project.bo.SuperBO;
 import com.service.Project.entity.admin;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface AdminBO {
+public interface AdminBO extends SuperBO {
     ArrayList<AdminDto> getAll() throws SQLException, ClassNotFoundException;
     boolean save(AdminDto dto) throws SQLException, ClassNotFoundException ;
     boolean update(AdminDto dto) throws SQLException, ClassNotFoundException ;

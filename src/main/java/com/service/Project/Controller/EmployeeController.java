@@ -3,6 +3,7 @@ package com.service.Project.Controller;
 import com.service.Project.DBConnection.DbConnection;
 import com.service.Project.Model.EmployeeDto;
 import com.service.Project.View.Tm.EmployeeTm;
+import com.service.Project.bo.BOFactory;
 import com.service.Project.bo.custom.AdminBO;
 import com.service.Project.bo.custom.EmployeeBO;
 import com.service.Project.bo.custom.Impl.AdminBOImpl;
@@ -94,8 +95,8 @@ public class EmployeeController  implements Initializable {
     @FXML
     private TextField txtName;
 
-    EmployeeBO employeeBO = new EmployeeBOImpl();
-    AdminBO adminBO= new AdminBOImpl();
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.employee);
+    AdminBO adminBO= (AdminBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.admin);
 
 
     @FXML

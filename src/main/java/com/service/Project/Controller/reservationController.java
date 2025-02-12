@@ -5,6 +5,7 @@ import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.ResavationDto;
 import com.service.Project.Model.Reservationdto;
 import com.service.Project.View.Tm.ReservationTm;
+import com.service.Project.bo.BOFactory;
 import com.service.Project.bo.custom.*;
 import com.service.Project.bo.custom.Impl.*;
 import com.service.Project.entity.AllReservation;
@@ -37,11 +38,11 @@ import java.util.ResourceBundle;
 
 public class reservationController implements Initializable {
 
-    ParkingLotBO parkingLotBO = new ParkingLotBOImpl();
-    FloorBO floorBO=new FloorBOImpl();
-    ParkingSpaceBO spaceBO = new ParkingSpaceBOImpl();
-    CustomerBO customerBO = new CustomerBOImpl();
-    ReservationBO reservationBO = new ReservationBOImpl();
+    ParkingLotBO parkingLotBO = (ParkingLotBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.lot);
+    FloorBO floorBO= (FloorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.floor);
+    ParkingSpaceBO spaceBO = (ParkingSpaceBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.space);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.customer);
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.reservation);
 
 
     @FXML

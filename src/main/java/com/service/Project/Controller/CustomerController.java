@@ -6,6 +6,7 @@ import com.service.Project.Model.CvFormDto;
 import com.service.Project.Model.VechicleCatagoryDto;
 import com.service.Project.Model.VechicleDto;
 import com.service.Project.View.Tm.CvFromTm;
+import com.service.Project.bo.BOFactory;
 import com.service.Project.bo.custom.CVFormBO;
 import com.service.Project.bo.custom.CustomerBO;
 import com.service.Project.bo.custom.Impl.CVFormBOImpl;
@@ -43,10 +44,10 @@ import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
 
-    CVFormBO cvFormBO = new CVFormBOImpl();
-    CustomerBO customerBO = new CustomerBOImpl();
-    VehicleBO vehicleBO = new VehicleBOImpl();
-    VCatagoryBO vCatagoryBO = new VCatagoryBOImpl();
+    CVFormBO cvFormBO = (CVFormBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.cvform);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.customer);
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.vehicle);
+    VCatagoryBO vCatagoryBO = (VCatagoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.vcatagory);
 
     @FXML
 

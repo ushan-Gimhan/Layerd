@@ -1,11 +1,12 @@
 package com.service.Project.bo.custom;
 
 import com.service.Project.Model.VechicleCatagoryDto;
+import com.service.Project.bo.SuperBO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface VCatagoryBO {
+public interface VCatagoryBO extends SuperBO {
     ArrayList<VechicleCatagoryDto> getAll() throws SQLException, ClassNotFoundException;
     boolean save(VechicleCatagoryDto dto) throws SQLException, ClassNotFoundException ;
     boolean update(VechicleCatagoryDto dto) throws SQLException, ClassNotFoundException ;

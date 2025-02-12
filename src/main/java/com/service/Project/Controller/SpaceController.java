@@ -7,6 +7,7 @@ import com.service.Project.Model.ParkingSpaceDto;
 import com.service.Project.View.Tm.FloorTm;
 import com.service.Project.View.Tm.ParkingLotTm;
 import com.service.Project.View.Tm.ParkingSpaceTm;
+import com.service.Project.bo.BOFactory;
 import com.service.Project.bo.custom.FloorBO;
 import com.service.Project.bo.custom.Impl.FloorBOImpl;
 import com.service.Project.bo.custom.Impl.ParkingLotBOImpl;
@@ -29,9 +30,9 @@ import java.util.ResourceBundle;
 
 public class SpaceController implements Initializable {
 
-    ParkingLotBO parkingLotBO = new ParkingLotBOImpl();
-    FloorBO floorBO = new FloorBOImpl();
-    ParkingSpaceBO parkingSpaceBO=new ParkingSpaceBOImpl();
+    ParkingLotBO parkingLotBO = (ParkingLotBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.lot);
+    FloorBO floorBO = (FloorBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.floor);
+    ParkingSpaceBO parkingSpaceBO= (ParkingSpaceBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.space);
 
     @FXML
     private Button btnAddFloor;

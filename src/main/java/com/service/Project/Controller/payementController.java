@@ -5,6 +5,7 @@ import com.service.Project.Model.CustomerDto;
 import com.service.Project.Model.PayementDto;
 import com.service.Project.View.Tm.AllPayemntTm;
 import com.service.Project.View.Tm.PaymentTm;
+import com.service.Project.bo.BOFactory;
 import com.service.Project.bo.custom.CustomerBO;
 import com.service.Project.bo.custom.Impl.CustomerBOImpl;
 import com.service.Project.bo.custom.Impl.PaymentBOImpl;
@@ -34,9 +35,9 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class payementController implements Initializable {
-    PaymentBO paymentBO = new PaymentBOImpl();
-    CustomerBO customerBO = new CustomerBOImpl();
-    ReservationBO reservationBO = new ReservationBOImpl();
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.payment);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.customer);
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.reservation);
 
     @FXML
     private TableColumn<AllPayemntTm,String> amountColumn;

@@ -3,11 +3,12 @@ package com.service.Project.bo.custom;
 import com.service.Project.Model.ResavationDto;
 import com.service.Project.Model.Reservationdto;
 import com.service.Project.Model.VechicleCatagoryDto;
+import com.service.Project.bo.SuperBO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ReservationBO {
+public interface ReservationBO extends SuperBO {
     ArrayList<ResavationDto> getAll() throws SQLException, ClassNotFoundException;
     boolean save(ResavationDto dto) throws SQLException, ClassNotFoundException ;
     boolean update(ResavationDto dto) throws SQLException, ClassNotFoundException ;

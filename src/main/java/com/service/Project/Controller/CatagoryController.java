@@ -2,6 +2,7 @@ package com.service.Project.Controller;
 
 import com.service.Project.Model.VechicleCatagoryDto;
 import com.service.Project.View.Tm.VechicleCatagoryTm;
+import com.service.Project.bo.BOFactory;
 import com.service.Project.bo.custom.Impl.VCatagoryBOImpl;
 import com.service.Project.bo.custom.VCatagoryBO;
 import javafx.collections.FXCollections;
@@ -61,7 +62,7 @@ public class CatagoryController implements Initializable {
     @FXML
     private Button updateButton;
 
-    VCatagoryBO catagoryBO= new VCatagoryBOImpl();
+    VCatagoryBO catagoryBO= (VCatagoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.vcatagory);
 
     @FXML
     void Onclicked(MouseEvent event) {

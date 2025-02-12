@@ -3,11 +3,12 @@ package com.service.Project.bo.custom;
 import com.service.Project.Model.CvFormDto;
 import com.service.Project.Model.FloorDto;
 import com.service.Project.View.Tm.CvFromTm;
+import com.service.Project.bo.SuperBO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface FloorBO {
+public interface FloorBO extends SuperBO {
     public ArrayList<FloorDto> getAll() throws SQLException, ClassNotFoundException;
     boolean save(FloorDto dto) throws SQLException, ClassNotFoundException ;
     boolean update(FloorDto dto) throws SQLException, ClassNotFoundException ;

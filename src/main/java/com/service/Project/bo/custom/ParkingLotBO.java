@@ -1,11 +1,12 @@
 package com.service.Project.bo.custom;
 
 import com.service.Project.Model.ParkingLotDto;
+import com.service.Project.bo.SuperBO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ParkingLotBO {
+public interface ParkingLotBO extends SuperBO {
     ArrayList<ParkingLotDto> getAll() throws SQLException, ClassNotFoundException;
     boolean save(ParkingLotDto dto) throws SQLException, ClassNotFoundException ;
     boolean update(ParkingLotDto dto) throws SQLException, ClassNotFoundException ;
