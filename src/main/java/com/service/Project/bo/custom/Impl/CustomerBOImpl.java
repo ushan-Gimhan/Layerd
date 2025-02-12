@@ -48,6 +48,6 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public CustomerDto FindById(String id) throws SQLException, ClassNotFoundException {
-        return null;
+        return customerBO.FindById(id);
     }
 }

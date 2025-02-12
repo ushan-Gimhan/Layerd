@@ -316,7 +316,6 @@ public class SpaceController implements Initializable {
 
         ArrayList<ParkingSpaceDto> spaceDtos = parkingSpaceBO.getAll();
 
-
         ObservableList<ParkingSpaceTm> spaceTms = FXCollections.observableArrayList();
 
         for (ParkingSpaceDto spaceDto : spaceDtos) {

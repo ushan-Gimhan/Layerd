@@ -51,7 +51,7 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return CrudUtil.execute("DELETE FROM parking_lot WHERE lot_id=?",id);
     }
 
     @Override

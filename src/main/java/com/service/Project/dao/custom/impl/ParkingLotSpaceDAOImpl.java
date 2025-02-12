@@ -37,8 +37,12 @@ public class ParkingLotSpaceDAOImpl implements ParkingSpaceDAO {
     }
 
     @Override
-    public boolean update(ParkingSpace dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean update(ParkingSpace parkingSpaceDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE parking_space SET status=?, floor_id=? WHERE space_id=?",
+                parkingSpaceDto.getStatus(),
+                parkingSpaceDto.getFloorId(),
+                parkingSpaceDto.getSpaceId());
+
     }
 
     @Override
@@ -48,7 +52,7 @@ public class ParkingLotSpaceDAOImpl implements ParkingSpaceDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return CrudUtil.execute("DELETE FROM parking_space WHERE space_id=?", id);
     }
 
     @Override

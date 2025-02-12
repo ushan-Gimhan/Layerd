@@ -71,11 +71,9 @@ public class CVFormBOImpl implements CVFormBO {
         connection.setAutoCommit(false);
 
             boolean isSaved = customerDAO.save(new Customer(customerDto.getCustomerId(),customerDto.getName(),customerDto.getNIC(),customerDto.getEmail(),customerDto.getPhone()));
-        System.out.println(isSaved);
             if (isSaved) {
                 boolean isvSaved = vehicleDAO.save(new Vehicle(vechicleDto.getVId(),vechicleDto.getVLisenPlate(),vechicleDto.getCId(),vechicleDto.getCatagoryId()));
                 if (isvSaved) {
-                    System.out.println(isvSaved);
                     connection.commit();
                     return true;
                 } else {

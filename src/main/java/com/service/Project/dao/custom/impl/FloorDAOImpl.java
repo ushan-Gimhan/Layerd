@@ -36,8 +36,12 @@ public class FloorDAOImpl implements FloorIdDAO {
     }
 
     @Override
-    public boolean update(Floor dto) throws SQLException, ClassNotFoundException {
-        return false;
+    public boolean update(Floor floorDto) throws SQLException, ClassNotFoundException {
+        return CrudUtil.execute("UPDATE floor SET lot_id = ?, status = ? WHERE floor_id = ?",
+                floorDto.getLotId(),
+                floorDto.getStatus(),
+                floorDto.getFloorId());
+
     }
 
     @Override
@@ -47,7 +51,8 @@ public class FloorDAOImpl implements FloorIdDAO {
 
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
-        return false;
+        return CrudUtil.execute("DELETE FROM floor WHERE floor_id = ?",id);
+
     }
 
     @Override
